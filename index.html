@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2B1E16">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}[hidden]{display:none!important}</style>
+<title>Eric 的 11 家店・拍片本</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;900&display=swap">
+<style>
+/* Layout: one-column phone app, sticker cards, fixed bottom tab bar */
+:root {
+  --bg: #FFF6E9;
+  --surface: #FFFDF8;
+  --surface-2: #FFE3C2;
+  --ink: #2B1E16;
+  --ink-soft: #5A463A;
+  --muted: #6E5A4C;
+  --line: #2B1E16;
+  --accent: #C2410C;
+  --accent-ink: #FFF6E9;
+  --sun: #FFC93C;
+  --teal: #13857A;
+  --danger: #B42318;
+  --shadow: #2B1E16;
+  --f-body: 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1E1611; --surface: #2B211A; --surface-2: #3A2B20; --ink: #FFF1DE; --ink-soft: #E3CDB6;
+    --muted: #BFA894; --line: #6B5444; --accent: #FF8A4C; --accent-ink: #1E1611; --sun: #FFC93C;
+    --teal: #4CC2B3; --danger: #FF8A80; --shadow: #000000; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1E1611; --surface: #2B211A; --surface-2: #3A2B20; --ink: #FFF1DE; --ink-soft: #E3CDB6;
+  --muted: #BFA894; --line: #6B5444; --accent: #FF8A4C; --accent-ink: #1E1611; --sun: #FFC93C;
+  --teal: #4CC2B3; --danger: #FF8A80; --shadow: #000000; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 720px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px calc(96px + env(safe-area-inset-bottom, 0px)); display: flex; flex-direction: column; gap: 20px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+h1 { font-size: 26px; font-weight: 900; line-height: 1.2; }
+h2 { font-size: 20px; font-weight: 900; }
+h3 { font-size: 16px; font-weight: 700; }
+p { margin: 0; }
+.eyebrow { font-size: 13px; font-weight: 700; color: var(--accent); letter-spacing: .06em; }
+.muted { color: var(--muted); font-size: 14px; }
+.sticker { background: var(--surface); border: 2px solid var(--line); border-radius: 18px; box-shadow: 4px 4px 0 var(--shadow); padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+.flat { background: var(--surface-2); border-radius: 16px; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+.row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.between { justify-content: space-between; }
+button, select, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+button:focus-visible, select:focus-visible, input:focus-visible, textarea:focus-visible, .tab:focus-visible { outline: 3px solid var(--sun); outline-offset: 2px; }
+.btn { border: 2px solid var(--line); background: var(--surface); border-radius: 999px; padding: 8px 16px; font-weight: 700; min-height: 40px; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.btn.sun { background: var(--sun); color: #2B1E16; border-color: var(--line); }
+.btn.small { padding: 4px 12px; min-height: 32px; font-size: 14px; }
+.btn.ghost { border-color: transparent; background: transparent; }
+.btn.danger { color: var(--danger); border-color: var(--danger); }
+.btn:disabled { opacity: .4; cursor: default; }
+.chip { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 999px; background: var(--surface-2); color: var(--ink); white-space: nowrap; }
+.chip.t-製作過程 { background: var(--accent); color: var(--accent-ink); }
+.chip.t-每月活動 { background: var(--sun); color: #2B1E16; }
+.chip.t-開幕新品 { background: var(--teal); color: var(--accent-ink); }
+.chip.t-店裡日常 { background: var(--ink); color: var(--bg); }
+.chip.warn { background: transparent; border: 1.5px solid var(--danger); color: var(--danger); }
+.field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.field label { font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+.field input, .field select, .field textarea { border: 2px solid var(--line); border-radius: 12px; background: var(--surface); padding: 8px 10px; width: 100%; }
+.field textarea { min-height: 64px; resize: vertical; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media (max-width: 420px) { .grid2 { grid-template-columns: 1fr; } }
+
+/* Countdown hero */
+.hero { background: var(--ink); color: var(--bg); border-radius: 22px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.hero .big { font-size: 44px; font-weight: 900; line-height: 1; color: var(--sun); font-variant-numeric: tabular-nums; }
+.hero p { color: var(--bg); opacity: .85; }
+
+/* Tasks */
+.task { display: flex; gap: 12px; align-items: flex-start; }
+.task .check { flex: none; width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--line); background: var(--surface); display: grid; place-items: center; font-weight: 900; }
+.task .check.done { background: var(--teal); border-color: var(--teal); color: var(--accent-ink); }
+.task .body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.task .verb { font-size: 13px; font-weight: 900; color: var(--accent); }
+.task.isdone .title { text-decoration: line-through; color: var(--muted); }
+
+/* Progress */
+.bar { height: 14px; border-radius: 999px; background: var(--surface-2); border: 2px solid var(--line); overflow: hidden; }
+.bar > span { display: block; height: 100%; background: var(--accent); }
+.badges { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+.badge { border: 2px dashed var(--line); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; opacity: .55; }
+.badge.on { border-style: solid; background: var(--sun); color: #2B1E16; opacity: 1; box-shadow: 3px 3px 0 var(--shadow); }
+.badge b { font-size: 14px; }
+.badge span { font-size: 12px; }
+
+/* Kanban */
+.board-scroll { overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); padding-inline: max(16px, env(safe-area-inset-left, 0px)); padding-bottom: 8px; }
+.board { display: flex; gap: 12px; width: max-content; align-items: flex-start; }
+.col { width: min(78vw, 280px); scroll-snap-align: start; background: var(--surface-2); border-radius: 18px; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.col-head { display: flex; justify-content: space-between; align-items: center; }
+.col-head b { font-size: 15px; }
+.count { font-size: 12px; font-weight: 900; background: var(--ink); color: var(--bg); border-radius: 999px; padding: 0 8px; font-variant-numeric: tabular-nums; }
+.kcard { background: var(--surface); border: 2px solid var(--line); border-radius: 14px; padding: 10px 12px; display: flex; flex-direction: column; gap: 8px; }
+.kcard .ktitle { font-weight: 700; text-align: left; background: none; border: 0; padding: 0; line-height: 1.4; }
+.kcard .kmeta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.kcard .kmove { display: flex; justify-content: space-between; }
+.empty { font-size: 13px; color: var(--muted); text-align: center; padding: 12px 4px; }
+
+/* Generator */
+.slot { border: 2px solid var(--line); border-radius: 16px; background: var(--surface); padding: 12px 14px; display: flex; gap: 10px; align-items: center; }
+.slot .lbl { flex: none; width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-weight: 900; font-size: 13px; }
+.slot .txt { flex: 1; min-width: 0; font-weight: 700; }
+.slot.hook .lbl { background: var(--accent); color: var(--accent-ink); }
+.slot.main .lbl { background: var(--sun); color: #2B1E16; }
+.slot.end .lbl { background: var(--teal); color: var(--accent-ink); }
+.slot.locked { box-shadow: 3px 3px 0 var(--shadow); }
+.spin { animation: pop .35s ease; }
+@keyframes pop { 0% { transform: scale(.96); opacity: .3; } 100% { transform: scale(1); opacity: 1; } }
+
+/* Map */
+.area { border: 2px solid var(--line); border-radius: 20px; background: var(--surface); padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.area-name { font-size: 18px; font-weight: 900; }
+.shops { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.shop { border-radius: 14px; padding: 10px 12px; background: var(--surface-2); display: flex; flex-direction: column; gap: 2px; border: 2px solid transparent; }
+.shop.red { border-color: var(--danger); }
+.shop b { font-size: 15px; }
+.shop .stat { font-size: 12px; color: var(--ink-soft); }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.dot.ok { background: var(--teal); }
+.dot.red { background: var(--danger); }
+.dot.none { background: var(--muted); }
+
+/* Plan strip */
+.plan { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; font-size: 14px; }
+.plan dt { font-weight: 700; color: var(--ink-soft); }
+.plan dd { margin: 0; min-width: 0; }
+
+/* Tabs */
+.tabs { position: fixed; left: 0; right: 0; bottom: 0; background: var(--ink); display: flex; justify-content: center; padding-bottom: env(safe-area-inset-bottom, 0px); padding-left: max(8px, env(safe-area-inset-left, 0px)); padding-right: max(8px, env(safe-area-inset-right, 0px)); z-index: 10; }
+.tabs-in { display: grid; grid-template-columns: repeat(5, 1fr); width: 100%; max-width: 720px; }
+.tab { background: none; border: 0; color: var(--bg); opacity: .7; padding: 10px 2px 12px; font-size: 13px; font-weight: 700; display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.tab .ico { font-size: 18px; line-height: 1; font-weight: 900; }
+.tab[aria-selected="true"] { opacity: 1; color: var(--sun); }
+
+/* Sheet */
+.sheet-bg { position: fixed; inset: 0; background: rgba(20, 12, 6, .55); z-index: 20; display: flex; align-items: flex-end; justify-content: center; }
+.sheet { background: var(--bg); width: 100%; max-width: 720px; max-height: 92vh; overflow-y: auto; border-radius: 22px 22px 0 0; padding: 18px max(16px, env(safe-area-inset-right, 0px)) calc(20px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px)); display: flex; flex-direction: column; gap: 14px; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(84px + env(safe-area-inset-bottom, 0px)); background: var(--ink); color: var(--bg); padding: 10px 18px; border-radius: 999px; font-weight: 700; z-index: 30; font-size: 14px; }
+@media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
+</style>
+
+</head>
+<body>
+<div class="wrap" id="app"></div>
+<nav class="tabs" aria-label="分頁"><div class="tabs-in" role="tablist" id="tabs"></div></nav>
+<div id="sheet"></div>
+<div id="toast" class="toast" hidden></div>
+
+<script>
+(function () {
+  'use strict';
+
+  // ---------- Fixed data from the 12-month plan ----------
+  var LAUNCH = '2027-03-01';
+  var BRANDS = [
+    { name: '紅茶大苑', areas: ['國鼎', '壽昌', '龍安'] },
+    { name: '三顧茅廬滷味', areas: ['中平', '寶山'], note: '合約待確認' },
+    { name: '拾串關東煮', areas: ['龍安', '寶山'] },
+    { name: '哨帥麻辣拌', areas: ['龍安'] },
+    { name: '李氏韓式豆腐鍋', areas: ['壽昌'] },
+    { name: '韓殿炒泡麵', areas: ['寶山'] },
+    { name: '一口煎餃', areas: ['龍安'] }
+  ];
+  var AREAS = ['龍安', '寶山', '壽昌', '國鼎', '中平'];
+  var TYPES = ['製作過程', '每月活動', '開幕新品', '店裡日常'];
+  var SERIES = ['', '店員推一口', '一天吃遍 11 家', '老闆請客', '跟著地圖吃一圈'];
+  var STAGES = [
+    { key: 'idea', name: '點子', verb: '寫腳本、排日期' },
+    { key: 'toshoot', name: '待拍', verb: '拍攝' },
+    { key: 'shot', name: '已拍', verb: '剪輯' },
+    { key: 'edited', name: '已剪', verb: '發布' },
+    { key: 'posted', name: '已發布', verb: '回填數字' },
+    { key: 'done', name: '已回填', verb: '' }
+  ];
+  var PLAN = [
+    { m: '2027-03', hero: '開張月：一口煎餃新店介紹＋韓殿炒泡麵', brand: '一口煎餃', holiday: '開學', drink: '微檸檬冬瓜 35', series: '新帳號開張、店員推一口開跑', map: '龍安美食地圖＋集章活動' },
+    { m: '2027-04', hero: '三顧茅廬滷味（備案：拾串關東煮寶山店）', brand: '三顧茅廬滷味', holiday: '兒童節、清明連假', drink: '梅子綠 29', series: '一天吃遍 11 家 第 1 集', map: '' },
+    { m: '2027-05', hero: '紅茶大苑（夏飲開跑）', brand: '紅茶大苑', holiday: '母親節', drink: '青檸多多 39', series: '請媽媽喝一杯', map: '壽昌＋國鼎美食地圖' },
+    { m: '2027-06', hero: '哨帥麻辣拌（夏天涼拌）', brand: '哨帥麻辣拌', holiday: '端午', drink: '基茶月 25', series: '消暑系列', map: '' },
+    { m: '2027-07', hero: '紅茶大苑', brand: '紅茶大苑', holiday: '暑假', drink: '多多綠 39', series: '一天吃遍 11 家 暑假特別篇', map: '寶山美食地圖' },
+    { m: '2027-08', hero: '韓殿炒泡麵', brand: '韓殿炒泡麵', holiday: '父親節、七夕', drink: '紅茶鮮奶 39', series: '雙人宵夜', map: '' },
+    { m: '2027-09', hero: '三顧茅廬滷味（備案：李氏韓式豆腐鍋）', brand: '三顧茅廬滷味', holiday: '中秋', drink: '微檸檬冬瓜 35', series: '中秋烤肉配滷味', map: '中平地圖（三顧可拍才做）' },
+    { m: '2027-10', hero: '一口煎餃一週年', brand: '一口煎餃', holiday: '一週年、萬聖節', drink: '梅子綠 29', series: '開幕一年回顧', map: '' },
+    { m: '2027-11', hero: '拾串關東煮', brand: '拾串關東煮', holiday: '入冬', drink: '青檸多多 39', series: '粉絲投票選新品', map: '' },
+    { m: '2027-12', hero: '李氏韓式豆腐鍋', brand: '李氏韓式豆腐鍋', holiday: '聖誕、跨年', drink: '基茶月 25', series: '年度人氣榜', map: '全區美食地圖＋年度集章' },
+    { m: '2028-01', hero: '哨帥麻辣拌', brand: '哨帥麻辣拌', holiday: '寒流、尾牙', drink: '多多綠 39', series: '老闆請客（新年抽獎）', map: '' },
+    { m: '2028-02', hero: '全品牌過年特輯', brand: '全品牌', holiday: '春節', drink: '紅茶鮮奶 39', series: '過年營業時間、開工吃什麼', map: '' }
+  ];
+  var PREP = [
+    { id: 'p1', text: '10/31 前拍一口煎餃開幕素材存檔（排隊、第一鍋、開幕現場）' },
+    { id: 'p2', text: '跟哥哥提案，確認 4 件事（帳號數、露臉、店員、預算）' },
+    { id: 'p3', text: '確認三顧茅廬合約能不能拍' },
+    { id: 'p4', text: '用哥哥名義先開帳號，佔好名稱（先不發片）' },
+    { id: 'p5', text: '到各店拍一輪固定素材（招牌、下鍋、裝盒、第一口）' },
+    { id: 'p6', text: '畫龍安美食地圖和集章卡' },
+    { id: 'p7', text: '用積木寫好 3～4 月的腳本' }
+  ];
+  var BLOCKS = {
+    hook: ['一個老闆開了 11 家店，今天吃{brand}', '{area}人下班都在吃這個', '{brand}店員最常被點的是哪一道？', '這個聲音你聽過嗎？', '第一次來{brand}的人都點錯了', '老闆說這個不能拍…', '下班不知道吃什麼？跟著我', '猜猜這一份多少錢？'],
+    main: ['製作過程特寫：下鍋、翻炒、裝盒', '價格揭曉', '客人第一口的反應', '店員推薦自己最愛的一道', '一天吃遍挑戰：連吃 2～3 家', '跟著美食地圖走一圈', '幕後花絮：開店前的準備'],
+    end: ['加 LINE 領優惠', '留言抽招待', '你最想吃哪家？留言告訴我', '收藏起來，下次路過就去', '用肚肚線上點餐更快', '集滿地圖章換好禮']
+  };
+
+  // ---------- State ----------
+  var KEY = 'ericMedia.v1';
+  var state = load();
+  var view = { tab: 'today', boardMonth: 'all', gen: null, genBrand: '隨機', genMonth: currentPlanMonth() };
+
+  function blank() { return { cards: [], prep: {}, seeded: false }; }
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (raw) { var s = JSON.parse(raw); if (s && Array.isArray(s.cards)) { s.prep = s.prep || {}; return s; } }
+    } catch (e) {}
+    return blank();
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  // ---------- Helpers ----------
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function uid() { return 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function ymd(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+  function today() { return ymd(new Date()); }
+  function parse(s) { var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +(p[2] || 1)); }
+  function daysBetween(a, b) { return Math.round((parse(b) - parse(a)) / 86400000); }
+  function weekStart(d) { var x = new Date(d.getFullYear(), d.getMonth(), d.getDate()); var wd = (x.getDay() + 6) % 7; x.setDate(x.getDate() - wd); return x; }
+  function currentPlanMonth() { var m = today().slice(0, 7); var hit = PLAN.filter(function (p) { return p.m === m; })[0]; return hit ? m : PLAN[0].m; }
+  function planFor(m) { return PLAN.filter(function (p) { return p.m === m; })[0]; }
+  function monthLabel(m) { var p = m.split('-'); return p[0] + ' 年 ' + (+p[1]) + ' 月'; }
+  function stageIndex(k) { for (var i = 0; i < STAGES.length; i++) if (STAGES[i].key === k) return i; return 0; }
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function brandObj(n) { return BRANDS.filter(function (b) { return b.name === n; })[0]; }
+  function isPosted(c) { return c.stage === 'posted' || c.stage === 'done'; }
+  function toast(msg) { var t = document.getElementById('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(function () { t.hidden = true; }, 1800); }
+
+  // ---------- Plan → cards ----------
+  function planCards(p) {
+    var heroType = /開張|開幕|一週年/.test(p.hero) ? '開幕新品' : '製作過程';
+    var list = [
+      { k: 'hero', title: '主打：' + p.hero, brand: p.brand, type: heroType },
+      { k: 'drink', title: '紅茶大苑本月飲料：' + p.drink, brand: '紅茶大苑', type: '每月活動' },
+      { k: 'series', title: '系列：' + p.series, brand: '全品牌', type: '店裡日常' },
+      { k: 'holiday', title: '節日檔期：' + p.holiday, brand: '全品牌', type: '每月活動' }
+    ];
+    if (p.map) list.push({ k: 'map', title: '美食地圖：' + p.map, brand: '全品牌', type: '每月活動', series: '跟著地圖吃一圈' });
+    return list;
+  }
+  function importPlanMonth(m) {
+    var p = planFor(m); if (!p) return 0;
+    var added = 0;
+    planCards(p).forEach(function (x) {
+      var tag = m + ':' + x.k;
+      if (state.cards.some(function (c) { return c.fromPlan === tag; })) return;
+      state.cards.push({ id: uid(), title: x.title, brand: x.brand, type: x.type, series: x.series || '', month: m, date: '', hook: '', main: '', end: '', stage: 'idea', views: '', comments: '', lineAdds: '', notes: '', fromPlan: tag, createdAt: today() });
+      added++;
+    });
+    save(); return added;
+  }
+  if (!state.seeded) { importPlanMonth('2027-03'); state.seeded = true; save(); }
+
+  // ---------- Derived ----------
+  function postedThisWeek() {
+    var ws = ymd(weekStart(new Date()));
+    return state.cards.filter(function (c) { return c.postedAt && c.postedAt >= ws; }).length;
+  }
+  function streak() {
+    var n = 0; var ws = weekStart(new Date());
+    var thisWeek = postedThisWeek();
+    if (thisWeek >= 3) n++;
+    for (var i = 1; i < 60; i++) {
+      var s = new Date(ws); s.setDate(s.getDate() - 7 * i); var e = new Date(s); e.setDate(e.getDate() + 7);
+      var a = ymd(s), b = ymd(e);
+      var cnt = state.cards.filter(function (c) { return c.postedAt && c.postedAt >= a && c.postedAt < b; }).length;
+      if (cnt >= 3) n++; else break;
+    }
+    return n;
+  }
+  function badges() {
+    var posted = state.cards.filter(isPosted);
+    var views = posted.some(function (c) { return +c.views >= 1000; });
+    var line = posted.reduce(function (s, c) { return s + (+c.lineAdds || 0); }, 0);
+    var brandsOut = BRANDS.every(function (b) { return posted.some(function (c) { return c.brand === b.name; }); });
+    return [
+      { name: '第一支影片', desc: '發布第一支', on: posted.length >= 1 },
+      { name: '破千觀看', desc: '任一支 1000 次以上', on: views },
+      { name: '連續 4 週達標', desc: '每週 3 支，連 4 週', on: streak() >= 4 },
+      { name: '七個品牌都出場', desc: '每個品牌至少 1 支', on: brandsOut },
+      { name: 'LINE 好友 +100', desc: '影片帶來 100 位好友', on: line >= 100 },
+      { name: '十支影片', desc: '累積發布 10 支', on: posted.length >= 10 }
+    ];
+  }
+  function todayTasks() {
+    var t = today(); var out = [];
+    if (t < LAUNCH) {
+      PREP.forEach(function (p) { if (!state.prep[p.id]) out.push({ kind: 'prep', id: p.id, verb: '準備期', title: p.text }); });
+    }
+    var active = state.cards.filter(function (c) { return c.stage !== 'done'; }).map(function (c) {
+      if (c.stage === 'posted') {
+        if (!c.postedAt || daysBetween(c.postedAt, t) < 3) return null;
+      }
+      return c;
+    }).filter(Boolean);
+    active.sort(function (a, b) {
+      var da = a.date || (a.month + '-31'), db = b.date || (b.month + '-31');
+      if (da !== db) return da < db ? -1 : 1;
+      return stageIndex(b.stage) - stageIndex(a.stage);
+    });
+    active.forEach(function (c) { out.push({ kind: 'card', id: c.id, verb: STAGES[stageIndex(c.stage)].verb, title: c.title, card: c }); });
+    return out.slice(0, 3);
+  }
+
+  // ---------- Render ----------
+  var app = document.getElementById('app');
+  var TABS = [
+    { key: 'today', name: '今日', ico: '◎' },
+    { key: 'board', name: '看板', ico: '▤' },
+    { key: 'gen', name: '積木', ico: '◆' },
+    { key: 'map', name: '地圖', ico: '⌂' },
+    { key: 'settings', name: '設定', ico: '≡' }
+  ];
+  function renderTabs() {
+    document.getElementById('tabs').innerHTML = TABS.map(function (t) {
+      return '<button class="tab" role="tab" data-tab="' + t.key + '" aria-selected="' + (view.tab === t.key) + '"><span class="ico" aria-hidden="true">' + t.ico + '</span>' + t.name + '</button>';
+    }).join('');
+  }
+  function render() {
+    renderTabs();
+    var f = { today: renderToday, board: renderBoard, gen: renderGen, map: renderMap, settings: renderSettings }[view.tab];
+    app.innerHTML = f();
+    try { localStorage.setItem(KEY + '.tab', view.tab); } catch (e) {}
+  }
+
+  function planBlock(m) {
+    var p = planFor(m); if (!p) return '';
+    return '<dl class="plan"><dt>主打</dt><dd>' + esc(p.hero) + '</dd><dt>節日</dt><dd>' + esc(p.holiday) + '</dd><dt>本月飲料</dt><dd>紅茶大苑 ' + esc(p.drink) + '</dd><dt>系列</dt><dd>' + esc(p.series) + '</dd>' + (p.map ? '<dt>地圖</dt><dd>' + esc(p.map) + '</dd>' : '') + '</dl>';
+  }
+
+  function renderToday() {
+    var t = today(); var h = '';
+    var d = new Date();
+    h += '<header class="row between"><div><p class="eyebrow">' + (d.getMonth() + 1) + ' 月 ' + d.getDate() + ' 日・週' + '日一二三四五六'[d.getDay()] + '</p><h1>今天要做的事</h1></div></header>';
+    if (t < LAUNCH) {
+      var left = daysBetween(t, LAUNCH);
+      var doneN = PREP.filter(function (p) { return state.prep[p.id]; }).length;
+      h += '<section class="hero"><p class="eyebrow" style="color:var(--sun)">準備期</p><div class="row" style="align-items:baseline"><span class="big">' + left + '</span><span style="font-weight:700">天後 3 月 1 日正式開張</span></div><p>準備清單完成 ' + doneN + ' / ' + PREP.length + '</p></section>';
+    }
+    var tasks = todayTasks();
+    h += '<section class="sticker"><div class="row between"><h2>今日任務</h2><span class="muted">最多 3 件</span></div>';
+    if (!tasks.length) h += '<p class="empty">今天沒有待辦。到「積木」抽一個點子，或到「看板」排日期。</p>';
+    tasks.forEach(function (k) {
+      h += '<div class="task"><button class="check" data-act="task-done" data-kind="' + k.kind + '" data-id="' + k.id + '" aria-label="完成：' + esc(k.title) + '">✓</button><div class="body"><span class="verb">' + esc(k.verb) + '</span><span class="title">' + esc(k.title) + '</span>' + (k.card ? '<span class="row" style="gap:6px"><span class="chip t-' + esc(k.card.type) + '">' + esc(k.card.type) + '</span><span class="chip">' + esc(k.card.brand) + '</span>' + (k.card.date ? '<span class="chip">' + esc(k.card.date.slice(5).replace('-', '/')) + '</span>' : '') + '</span>' : '') + '</div>' + (k.card ? '<button class="btn small ghost" data-act="edit" data-id="' + k.id + '">打開</button>' : '') + '</div>';
+    });
+    h += '</section>';
+
+    // Weekly goal + streak
+    var w = postedThisWeek(); var pct = Math.min(100, Math.round(w / 3 * 100));
+    h += '<section class="sticker"><div class="row between"><h2>本週發片</h2><b style="font-variant-numeric:tabular-nums">' + w + ' / 3 支</b></div><div class="bar" role="img" aria-label="本週已發 ' + w + ' 支，目標 3 支"><span style="width:' + pct + '%"></span></div><p class="muted">連續達標 <b>' + streak() + '</b> 週・每週一重新計算</p></section>';
+
+    // This month in plan
+    var pm = currentPlanMonth();
+    h += '<section class="flat"><div class="row between"><h3>' + monthLabel(pm) + '・企劃表</h3><button class="btn small" data-act="import-plan" data-m="' + pm + '">把本月企劃放進看板</button></div>' + planBlock(pm) + '</section>';
+
+    // Badges
+    h += '<section class="sticker"><h2>成就徽章</h2><div class="badges">' + badges().map(function (b) { return '<div class="badge' + (b.on ? ' on' : '') + '"><b>' + (b.on ? '★ ' : '☆ ') + esc(b.name) + '</b><span>' + esc(b.desc) + '</span></div>'; }).join('') + '</div></section>';
+
+    if (t < LAUNCH) {
+      h += '<section class="sticker"><h2>準備清單</h2>' + PREP.map(function (p) { var on = !!state.prep[p.id]; return '<div class="task' + (on ? ' isdone' : '') + '"><button class="check' + (on ? ' done' : '') + '" data-act="prep" data-id="' + p.id + '" aria-pressed="' + on + '" aria-label="' + esc(p.text) + '">✓</button><div class="body"><span class="title">' + esc(p.text) + '</span></div></div>'; }).join('') + '</section>';
+    }
+    return h;
+  }
+
+  function renderBoard() {
+    var h = '<header class="row between"><div><p class="eyebrow">從點子到回填數字</p><h1>看板</h1></div><button class="btn primary" data-act="new">＋ 新卡片</button></header>';
+    h += '<div class="row"><div class="field" style="flex:1"><label for="boardMonth">月份</label><select id="boardMonth" data-act="board-month"><option value="all">全部月份</option>' + PLAN.map(function (p) { return '<option value="' + p.m + '"' + (view.boardMonth === p.m ? ' selected' : '') + '>' + monthLabel(p.m) + '</option>'; }).join('') + '</select></div></div>';
+    if (view.boardMonth !== 'all') h += '<section class="flat">' + planBlock(view.boardMonth) + '<div><button class="btn small" data-act="import-plan" data-m="' + view.boardMonth + '">把這個月的企劃放進看板</button></div></section>';
+    var cards = state.cards.filter(function (c) { return view.boardMonth === 'all' || c.month === view.boardMonth; });
+    h += '<div class="board-scroll"><div class="board">';
+    STAGES.forEach(function (s, i) {
+      var list = cards.filter(function (c) { return c.stage === s.key; });
+      list.sort(function (a, b) { return (a.date || a.month + '-31') < (b.date || b.month + '-31') ? -1 : 1; });
+      h += '<section class="col" aria-label="' + s.name + '"><div class="col-head"><b>' + s.name + '</b><span class="count">' + list.length + '</span></div>';
+      if (!list.length) h += '<p class="empty">還沒有卡片</p>';
+      list.forEach(function (c) {
+        h += '<article class="kcard"><button class="ktitle" data-act="edit" data-id="' + c.id + '">' + esc(c.title) + '</button><div class="kmeta"><span class="chip t-' + esc(c.type) + '">' + esc(c.type) + '</span><span class="chip">' + esc(c.brand) + '</span>' + (c.date ? '<span class="chip">' + esc(c.date.slice(5).replace('-', '/')) + '</span>' : '<span class="chip">' + esc(monthLabel(c.month).replace(/^\d+ 年 /, '')) + '</span>') + '</div><div class="kmove"><button class="btn small" data-act="move" data-dir="-1" data-id="' + c.id + '"' + (i === 0 ? ' disabled' : '') + ' aria-label="移到上一欄">◀</button><button class="btn small" data-act="move" data-dir="1" data-id="' + c.id + '"' + (i === STAGES.length - 1 ? ' disabled' : '') + ' aria-label="移到下一欄">▶</button></div></article>';
+      });
+      h += '</section>';
+    });
+    h += '</div></div><p class="muted">左右滑動看所有欄位。按 ▶ 往下一步，點標題可以編輯。</p>';
+    return h;
+  }
+
+  function roll(slot) {
+    var bname = view.genBrand === '隨機' ? pick(BRANDS).name : view.genBrand;
+    var b = brandObj(bname);
+    var g = view.gen || { brand: bname, locked: {} };
+    if (!slot) { g.brand = bname; }
+    var area = pick(b.areas);
+    ['hook', 'main', 'end'].forEach(function (k) {
+      if (slot && slot !== k) return;
+      if (!slot && g.locked[k]) return;
+      var txt = pick(BLOCKS[k]);
+      g[k] = txt.replace(/\{brand\}/g, g.brand).replace(/\{area\}/g, area);
+    });
+    view.gen = g;
+  }
+  function renderGen() {
+    if (!view.gen) roll();
+    var g = view.gen;
+    var h = '<header><p class="eyebrow">鉤子＋主體＋結尾</p><h1>積木產生器</h1></header>';
+    h += '<div class="grid2"><div class="field"><label for="genBrand">品牌</label><select id="genBrand" data-act="gen-brand"><option>隨機</option>' + BRANDS.map(function (b) { return '<option' + (view.genBrand === b.name ? ' selected' : '') + '>' + b.name + '</option>'; }).join('') + '</select></div><div class="field"><label for="genMonth">排進哪個月</label><select id="genMonth" data-act="gen-month">' + PLAN.map(function (p) { return '<option value="' + p.m + '"' + (view.genMonth === p.m ? ' selected' : '') + '>' + monthLabel(p.m) + '</option>'; }).join('') + '</select></div></div>';
+    h += '<section class="sticker"><div class="row between"><h2>' + esc(g.brand) + '</h2>' + (brandObj(g.brand) && brandObj(g.brand).note ? '<span class="chip warn">' + esc(brandObj(g.brand).note) + '</span>' : '') + '</div>';
+    [['hook', '鉤子', '前 3 秒'], ['main', '主體', ''], ['end', '結尾', '行動']].forEach(function (s) {
+      var lk = !!g.locked[s[0]];
+      h += '<div class="slot ' + s[0] + (lk ? ' locked' : '') + ' spin"><span class="lbl">' + s[1] + '</span><span class="txt">' + esc(g[s[0]]) + '</span><button class="btn small ghost" data-act="lock" data-k="' + s[0] + '" aria-pressed="' + lk + '">' + (lk ? '已鎖' : '鎖住') + '</button><button class="btn small" data-act="reroll" data-k="' + s[0] + '" aria-label="重抽' + s[1] + '">↻</button></div>';
+    });
+    h += '<div class="row"><button class="btn sun" data-act="roll" style="flex:1">全部重抽</button><button class="btn primary" data-act="gen-add" style="flex:1">加進點子欄</button></div></section>';
+    h += '<p class="muted">鎖住喜歡的那一塊，再按「全部重抽」，只會換掉沒鎖的。</p>';
+    return h;
+  }
+
+  function renderMap() {
+    var t = today();
+    var h = '<header><p class="eyebrow">哪家店太久沒出場會亮紅燈</p><h1>店家地圖</h1></header>';
+    var stats = {};
+    BRANDS.forEach(function (b) {
+      var posted = state.cards.filter(function (c) { return c.brand === b.name && isPosted(c) && c.postedAt; });
+      var last = posted.map(function (c) { return c.postedAt; }).sort().pop() || '';
+      var planned = state.cards.filter(function (c) { return c.brand === b.name && !isPosted(c); }).length;
+      var status = !last ? 'none' : (daysBetween(last, t) > 30 ? 'red' : 'ok');
+      stats[b.name] = { count: posted.length, last: last, planned: planned, status: status };
+    });
+    AREAS.forEach(function (a) {
+      var here = BRANDS.filter(function (b) { return b.areas.indexOf(a) >= 0; });
+      h += '<section class="area"><div class="row between"><span class="area-name">' + a + '</span><span class="muted">' + here.length + ' 家</span></div><div class="shops">';
+      here.forEach(function (b) {
+        var s = stats[b.name];
+        var label = s.status === 'none' ? '還沒出場' : (s.status === 'red' ? '超過 30 天沒出場' : '最近有出場');
+        h += '<div class="shop' + (s.status === 'red' ? ' red' : '') + '"><b>' + esc(b.name) + '</b><span class="stat"><span class="dot ' + s.status + '" aria-hidden="true"></span> ' + label + '</span><span class="stat">已發 ' + s.count + ' 支・排隊中 ' + s.planned + ' 支</span>' + (s.last ? '<span class="stat">上次 ' + s.last.slice(5).replace('-', '/') + '</span>' : '') + (b.note ? '<span class="chip warn" style="align-self:flex-start">' + esc(b.note) + '</span>' : '') + '</div>';
+      });
+      h += '</div></section>';
+    });
+    h += '<p class="muted">同一個品牌有好幾家分店時，會出現在每個區域，數字是整個品牌合計。</p>';
+    return h;
+  }
+
+  function renderSettings() {
+    var h = '<header><p class="eyebrow">換手機、換人接手都靠這裡</p><h1>設定與交接</h1></header>';
+    h += '<section class="sticker"><h2>匯出備份</h2><p class="muted">資料只存在這支手機的瀏覽器裡。按「複製備份」，貼到 LINE 記事本或傳給接手的人保存。</p><div class="row"><button class="btn primary" data-act="export">複製備份</button><button class="btn" data-act="download">下載檔案</button></div><div class="field"><label for="exportBox">備份內容</label><textarea id="exportBox" readonly rows="4"></textarea></div></section>';
+    h += '<section class="sticker"><h2>匯入備份</h2><p class="muted">把備份內容貼進來，或選擇備份檔。匯入會取代目前所有資料。</p><div class="field"><label for="importBox">貼上備份</label><textarea id="importBox" rows="4" placeholder="{&quot;cards&quot;: …}"></textarea></div><div class="field"><label for="importFile">或選擇檔案</label><input id="importFile" type="file" accept=".json,application/json,text/plain"></div><div class="row" id="importRow"><button class="btn" data-act="import-ask">匯入</button></div></section>';
+    h += '<section class="flat"><h3>目前資料</h3><p class="muted">卡片 ' + state.cards.length + ' 張・已發布 ' + state.cards.filter(isPosted).length + ' 支・準備清單完成 ' + PREP.filter(function (p) { return state.prep[p.id]; }).length + ' / ' + PREP.length + '</p></section>';
+    return h;
+  }
+
+  // ---------- Card editor ----------
+  function openEditor(id) {
+    var c = id ? state.cards.filter(function (x) { return x.id === id; })[0] : { id: '', title: '', brand: BRANDS[0].name, type: TYPES[0], series: '', month: view.boardMonth !== 'all' ? view.boardMonth : currentPlanMonth(), date: '', hook: '', main: '', end: '', stage: 'idea', views: '', comments: '', lineAdds: '', notes: '' };
+    if (!c) return;
+    var opt = function (arr, v) { return arr.map(function (x) { var val = typeof x === 'string' ? x : x.v; var lab = typeof x === 'string' ? (x || '（無）') : x.l; return '<option value="' + esc(val) + '"' + (val === v ? ' selected' : '') + '>' + esc(lab) + '</option>'; }).join(''); };
+    var brands = BRANDS.map(function (b) { return b.name; }).concat(['全品牌']);
+    var h = '<div class="sheet-bg" data-act="close-bg"><form class="sheet" id="cardForm" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">';
+    h += '<div class="row between"><h2 id="sheetTitle">' + (id ? '編輯卡片' : '新卡片') + '</h2><button type="button" class="btn small ghost" data-act="close">關閉</button></div>';
+    h += '<div class="field"><label for="f_title">標題</label><input id="f_title" name="title" required value="' + esc(c.title) + '" placeholder="例：煎餃煎到酥的聲音"></div>';
+    h += '<div class="grid2"><div class="field"><label for="f_brand">品牌</label><select id="f_brand" name="brand">' + opt(brands, c.brand) + '</select></div><div class="field"><label for="f_type">類型</label><select id="f_type" name="type">' + opt(TYPES, c.type) + '</select></div>';
+    h += '<div class="field"><label for="f_series">系列</label><select id="f_series" name="series">' + opt(SERIES, c.series) + '</select></div><div class="field"><label for="f_stage">進度</label><select id="f_stage" name="stage">' + opt(STAGES.map(function (s) { return { v: s.key, l: s.name }; }), c.stage) + '</select></div>';
+    h += '<div class="field"><label for="f_month">月份</label><select id="f_month" name="month">' + opt(PLAN.map(function (p) { return { v: p.m, l: monthLabel(p.m) }; }), c.month) + '</select></div><div class="field"><label for="f_date">發布日期</label><input id="f_date" name="date" type="date" value="' + esc(c.date) + '"></div></div>';
+    h += '<div class="field"><label for="f_hook">鉤子（前 3 秒）</label><input id="f_hook" name="hook" value="' + esc(c.hook) + '"></div>';
+    h += '<div class="field"><label for="f_main">主體</label><input id="f_main" name="main" value="' + esc(c.main) + '"></div>';
+    h += '<div class="field"><label for="f_end">結尾</label><input id="f_end" name="end" value="' + esc(c.end) + '"></div>';
+    h += '<div class="grid2"><div class="field"><label for="f_views">觀看數</label><input id="f_views" name="views" inputmode="numeric" value="' + esc(c.views) + '"></div><div class="field"><label for="f_comments">留言數</label><input id="f_comments" name="comments" inputmode="numeric" value="' + esc(c.comments) + '"></div><div class="field"><label for="f_line">LINE 新好友</label><input id="f_line" name="lineAdds" inputmode="numeric" value="' + esc(c.lineAdds) + '"></div></div>';
+    h += '<div class="field"><label for="f_notes">備註（要拍的鏡頭、誰入鏡）</label><textarea id="f_notes" name="notes">' + esc(c.notes) + '</textarea></div>';
+    h += '<div class="row between"><div class="row" id="delRow">' + (id ? '<button type="button" class="btn danger small" data-act="del-ask" data-id="' + id + '">刪除</button>' : '') + '</div><button class="btn primary" type="submit">儲存</button></div>';
+    h += '<input type="hidden" name="id" value="' + esc(id) + '"></form></div>';
+    document.getElementById('sheet').innerHTML = h;
+    var t = document.getElementById('f_title'); if (t && !id) t.focus();
+  }
+  function closeSheet() { document.getElementById('sheet').innerHTML = ''; }
+
+  function setStage(c, stage) {
+    c.stage = stage;
+    if (isPosted(c) && !c.postedAt) c.postedAt = c.date && c.date <= today() ? c.date : today();
+    if (!isPosted(c)) c.postedAt = '';
+  }
+
+  // ---------- Events ----------
+  document.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-act],[data-tab]');
+    if (!el) return;
+    if (el.dataset.tab) { view.tab = el.dataset.tab; render(); window.scrollTo(0, 0); return; }
+    var act = el.dataset.act, id = el.dataset.id;
+    var card = id ? state.cards.filter(function (c) { return c.id === id; })[0] : null;
+    switch (act) {
+      case 'close-bg': if (e.target === el) closeSheet(); return;
+      case 'close': closeSheet(); return;
+      case 'new': openEditor(''); return;
+      case 'edit': openEditor(id); return;
+      case 'move':
+        if (!card) return;
+        var i = stageIndex(card.stage) + (+el.dataset.dir);
+        if (i < 0 || i >= STAGES.length) return;
+        setStage(card, STAGES[i].key); save(); render(); toast('移到「' + STAGES[i].name + '」'); return;
+      case 'task-done':
+        if (el.dataset.kind === 'prep') { state.prep[id] = true; save(); render(); toast('準備事項完成'); return; }
+        if (!card) return;
+        if (card.stage === 'posted') { openEditor(id); toast('填好數字，進度改成「已回填」'); return; }
+        var n = stageIndex(card.stage) + 1;
+        setStage(card, STAGES[n].key); save(); render(); toast('移到「' + STAGES[n].name + '」'); return;
+      case 'prep': state.prep[id] = !state.prep[id]; save(); render(); return;
+      case 'import-plan':
+        var added = importPlanMonth(el.dataset.m); render();
+        toast(added ? '放進 ' + added + ' 張卡片' : '這個月的企劃已經在看板上了'); return;
+      case 'roll': roll(); render(); return;
+      case 'reroll': roll(el.dataset.k); render(); return;
+      case 'lock': view.gen.locked[el.dataset.k] = !view.gen.locked[el.dataset.k]; render(); return;
+      case 'gen-add':
+        var g = view.gen;
+        var b = g.brand;
+        state.cards.push({ id: uid(), title: g.hook, brand: b, type: /製作|下鍋/.test(g.main) ? '製作過程' : (/店員|花絮|反應/.test(g.main) ? '店裡日常' : '每月活動'), series: /地圖/.test(g.main) ? '跟著地圖吃一圈' : (/一天吃遍/.test(g.main) ? '一天吃遍 11 家' : (/店員推薦/.test(g.main) ? '店員推一口' : '')), month: view.genMonth, date: '', hook: g.hook, main: g.main, end: g.end, stage: 'idea', views: '', comments: '', lineAdds: '', notes: '', createdAt: today() });
+        save(); toast('加進「點子」欄了'); roll(); render(); return;
+      case 'export':
+        var txt = JSON.stringify(state);
+        var box = document.getElementById('exportBox'); box.value = txt;
+        try { navigator.clipboard.writeText(txt).then(function () { toast('已複製備份'); }, function () { box.select(); toast('請長按全選後複製'); }); } catch (err) { box.select(); toast('請長按全選後複製'); }
+        return;
+      case 'download':
+        var data = JSON.stringify(state, null, 1);
+        document.getElementById('exportBox').value = data;
+        try { var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([data], { type: 'application/json' })); a.download = '拍片本備份-' + today() + '.json'; document.body.appendChild(a); a.click(); a.remove(); toast('下載沒反應的話，用「複製備份」'); } catch (err) { toast('請用「複製備份」'); }
+        return;
+      case 'import-ask':
+        document.getElementById('importRow').innerHTML = '<span class="muted">會取代目前所有資料，確定嗎？</span><button class="btn danger small" data-act="import-yes">確定匯入</button><button class="btn small" data-act="import-no">取消</button>';
+        return;
+      case 'import-no': render(); return;
+      case 'import-yes':
+        var raw = document.getElementById('importBox').value.trim();
+        try {
+          var s = JSON.parse(raw);
+          if (!s || !Array.isArray(s.cards)) throw new Error('bad');
+          s.prep = s.prep || {}; s.seeded = true; state = s; save(); view.tab = 'board'; render(); toast('匯入完成：' + state.cards.length + ' 張卡片');
+        } catch (err) { toast('看不懂這份備份，請確認貼上的是完整內容'); }
+        return;
+      case 'del-ask':
+        document.getElementById('delRow').innerHTML = '<button type="button" class="btn danger small" data-act="del-yes" data-id="' + id + '">確定刪除</button><button type="button" class="btn small" data-act="del-no" data-id="' + id + '">取消</button>';
+        return;
+      case 'del-no': openEditor(id); return;
+      case 'del-yes':
+        state.cards = state.cards.filter(function (c) { return c.id !== id; }); save(); closeSheet(); render(); toast('已刪除'); return;
+    }
+  });
+  document.addEventListener('change', function (e) {
+    var el = e.target;
+    if (el.dataset.act === 'board-month') { view.boardMonth = el.value; render(); }
+    if (el.dataset.act === 'gen-brand') { view.genBrand = el.value; view.gen = null; render(); }
+    if (el.dataset.act === 'gen-month') { view.genMonth = el.value; }
+    if (el.id === 'importFile' && el.files && el.files[0]) {
+      var r = new FileReader();
+      r.onload = function () { document.getElementById('importBox').value = r.result; toast('檔案已讀入，按「匯入」完成'); };
+      r.readAsText(el.files[0]);
+    }
+  });
+  document.addEventListener('submit', function (e) {
+    if (e.target.id !== 'cardForm') return;
+    e.preventDefault();
+    var f = new FormData(e.target); var o = {};
+    f.forEach(function (v, k) { o[k] = String(v).trim(); });
+    if (!o.title) { toast('請填標題'); return; }
+    var c = o.id ? state.cards.filter(function (x) { return x.id === o.id; })[0] : null;
+    if (!c) { c = { id: uid(), createdAt: today() }; state.cards.push(c); }
+    ['title', 'brand', 'type', 'series', 'month', 'date', 'hook', 'main', 'end', 'views', 'comments', 'lineAdds', 'notes'].forEach(function (k) { c[k] = o[k] || ''; });
+    var hasNumbers = c.views !== '' || c.lineAdds !== '';
+    var stage = o.stage;
+    if (stage === 'posted' && hasNumbers) stage = 'done';
+    setStage(c, stage);
+    save(); closeSheet(); render(); toast(stage === 'done' && o.stage === 'posted' ? '已儲存，移到「已回填」' : '已儲存');
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeSheet(); });
+
+  try { var lastTab = localStorage.getItem(KEY + '.tab'); if (lastTab && TABS.some(function (t) { return t.key === lastTab; })) view.tab = lastTab; } catch (e) {}
+  render();
+})();
+</script>
+
+</body>
+</html>
